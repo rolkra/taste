@@ -3,6 +3,7 @@
 ## can you taste the difference between drink A and drink B?
 ## one of n glasses contains a different drink
 ## try to identify the one that ist differnet
+## H0: no difference in taste, H1: difference in taste
 ################################################################################
 
 # use shiny package
