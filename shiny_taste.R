@@ -11,26 +11,26 @@ library(shiny)
 
 # define ui
 ui <- fluidPage(
-    titlePanel("Sensoric Test (find the one that is different)"),
-    sidebarLayout(
-      sidebarPanel(
-        textInput(inputId = "drink", 
-                  label = " Drink",
-                  value = "Beer"),
-        sliderInput(inputId = "glasses", 
+  titlePanel("Sensoric Test (find the one that is different)"),
+  sidebarLayout(
+    sidebarPanel(
+      textInput(inputId = "drink", 
+                label = " Drink",
+                value = "Beer"),
+      sliderInput(inputId = "glasses", 
                   label = "Glasses", 
                   value = 3, min = 3, max = 10),
-        numericInput(inputId = "trials", label = "Repeats", 
-                     value = 3, min = 1, max = 100),
-        radioButtons(inputId = "alpha", label = "Alpha (p same result by guessing)", 
-                     choices = c("1%" = "0.01", "5%" = "0.05", "10%" = "0.10"),
-                     selected = "0.05") ,
-        checkboxInput(inputId = "values", label="Show Values", value=TRUE)
-      ),
-      mainPanel(
-        plotOutput("graph")
-      ) 
-    ) # sidebarLayout
+      numericInput(inputId = "trials", label = "Repeats", 
+                   value = 3, min = 1, max = 100),
+      radioButtons(inputId = "alpha", label = "Alpha (p same result by guessing)", 
+                   choices = c("1%" = "0.01", "5%" = "0.05", "10%" = "0.10", "15%" = "0.15", "20%" = "0.20"),
+                   selected = "0.05") ,
+      checkboxInput(inputId = "values", label="Show Values", value=TRUE)
+    ),
+    mainPanel(
+      plotOutput("graph")
+    ) 
+  ) # sidebarLayout
 ) # fluidPage
 
 # server: calculate statistics and generate plot
@@ -40,7 +40,7 @@ server <- function(input, output) {
     # setup
     trials <- input$trials
     p_gotit = 1/input$glasses    
-
+    
     # which result is statistically significant?
     max_p <- as.numeric(input$alpha)
     success_no <- qbinom(1-max_p, size = trials, prob = p_gotit)
@@ -51,7 +51,7 @@ server <- function(input, output) {
     # calculate x and y coordinates for plot
     x <- c(0:trials)
     y <- dbinom(x = x, size = trials, prob = p_gotit) * 100
-
+    
     # define colors (green for significant results)
     color <- rep("grey",length(x))
     color[success_no+2:length(x)] <- "darkgreen"
@@ -60,9 +60,9 @@ server <- function(input, output) {
     p <- barplot(y, names.arg = x, 
                  ylim = c(0, max(y)*1.2),
                  main = paste0("Sensoric ", input$drink, " Test\n",
-                              "Find the one ", input$drink, 
-                              " that is different out of ", input$glasses, 
-                              " (" , trials, " repeats)"),
+                               "Find the one ", input$drink, 
+                               " that is different out of ", input$glasses, 
+                               " (" , trials, " repeats)"),
                  xlab = paste("Times found the right", input$drink),
                  ylab = "Probability in %",
                  col = color,
@@ -80,10 +80,10 @@ server <- function(input, output) {
     
     # plot success line (border between "no success" and "success")
     if (success_no+1 < length(x))  {
-        abline(v = x_success_plot, col = "darkgreen", lty="dotted", lwd=2)
-        text(x_success_plot+(length(x)*0.02), max(y)*0.9, 
-             paste0("Success if >=", success_no+1), 
-             col="darkgreen", srt=90)
+      abline(v = x_success_plot, col = "darkgreen", lty="dotted", lwd=2)
+      text(x_success_plot+(length(x)*0.02), max(y)*0.9, 
+           paste0("Success if >=", success_no+1), 
+           col="darkgreen", srt=90)
     } # if
   }) # renderPlot
 } # server
