@@ -1,32 +1,46 @@
+################################################################################
+## prepare
+################################################################################
 
-## load data
-
+# load packages
 library(tidyverse)
+library(explore)
 
-data <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_general.csv")
+# set proxy (if needed)
+Sys.setenv(http_proxy = 'http://proxy.austria.local:8080')
+
+################################################################################
+## read data
+################################################################################
+
+# read data general
+data_ge <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_general.csv")
 glimpse(data)
 
+# read data unblinded
 data_ub <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_unblinded.csv")
 glimpse(data_ub)
 
+################################################################################
 ## analyse unblinded
+################################################################################
 
+# transform data (columns smell_* and taste_* as categories)
 data_ub2 <- data_ub %>% gather(unblinded_test, score, smell_good:taste_good)
-View(data_ub2)
 glimpse(data_ub2)
 
-tmp <- data_ub2 %>% group_by(beer, unblinded_test) %>% summarize(mean_score = mean(score))
+# calculate average score per category
+data_ub3 <- data_ub2 %>% group_by(beer, unblinded_test) %>% summarize(mean_score = mean(score))
+glimpse(data_ub3)
 
-tmp %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) + 
+# plot 
+data_ub3 %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) + 
   geom_col(position=position_dodge()) + 
   scale_fill_manual(values=c("darkgreen","orange")) +
   coord_flip()
 
-glimpse(tmp)
-
-## calculate diff
-
-data_ub3 <- data_ub %>% 
+# calculate diff
+data_ub4 <- data_ub %>% 
   group_by(id) %>%
   summarize(smell_good_diff = max(smell_good) - min(smell_good),
             smell_sweet_diff = max(smell_sweet) - min(smell_sweet),
@@ -39,32 +53,39 @@ data_ub3 <- data_ub %>%
             taste_good_diff = max(taste_good) - min(taste_good)) %>% 
   mutate(smell_total_diff = smell_good_diff + smell_sweet_diff + smell_smoke_diff,
          taste_total_diff = taste_heavy_diff + taste_sweet_diff + taste_bitter_diff + 
-         taste_fresh_diff + taste_harmony_diff + taste_good_diff) %>% 
+           taste_fresh_diff + taste_harmony_diff + taste_good_diff) %>% 
   mutate(total_diff = smell_total_diff + taste_total_diff)
 
-
-glimpse(data_ub3)
-
-
-## join
-
-data_all <- data %>% inner_join(data_ub3, by="id")
-glimpse(data_all)
+glimpse(data_ub4)
 
 
-## explore all
+################################################################################
+## explore data
+################################################################################
 
-data_all %>%  explore()
-data_ub %>% mutate(is_goesser = ifelse(beer == "Goesser", 1, 0)) %>% explore()
+data <- data_ge %>% inner_join(data_ub4, by="id")
+glimpse(data)
+
+## explore complete data
+data %>%  explore()
+
+# explore unblinded data
+data_ub %>% 
+  mutate(is_goesser = ifelse(beer == "Goesser", 1, 0),
+         is_ottakringer = ifelse(beer == "Ottakringer", 1, 0)) %>% 
+  explore()
 
 
-## decision tree
+################################################################################
+## create model
+################################################################################
 
+# load packages
 library(rpart)
 library(rpart.plot)
 
 # all attributes
-data_model <- data_all
+data_model <- data
 mod <- rpart(double_blinded_1 ~ ., 
              data = data_model,
              method = "class")
@@ -72,7 +93,7 @@ mod <- rpart(double_blinded_1 ~ .,
 rpart.plot(mod)
 
 # remove favorite beer
-data_model <- data_all %>%  select(-favorite_beer)
+data_model <- data %>%  select(-favorite_beer)
 mod <- rpart(double_blinded_1 ~ ., 
              data = data_model,
              method = "class")
@@ -80,7 +101,7 @@ mod <- rpart(double_blinded_1 ~ .,
 rpart.plot(mod)
 
 # select attributes
-data_model <- data_all %>%  select(double_blinded_1, gender, smell_good_diff)
+data_model <- data %>%  select(double_blinded_1, gender, smell_good_diff)
 mod <- rpart(double_blinded_1 ~ ., 
              data = data_model,
              method = "class")
