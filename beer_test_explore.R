@@ -7,7 +7,7 @@ library(tidyverse)
 library(explore)
 
 # set proxy (if needed)
-Sys.setenv(http_proxy = 'http://proxy.austria.local:8080')
+Sys.setenv(http_proxy = 'http://proxy.xxx.xxx:8080')
 
 ################################################################################
 ## read data
