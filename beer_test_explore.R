@@ -14,11 +14,11 @@ Sys.setenv(http_proxy = 'http://proxy.xxx.xxx:8080')
 ################################################################################
 
 # read data general
-data_ge <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_general.csv")
+data_ge <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_data_general.csv")
 glimpse(data)
 
 # read data unblinded
-data_ub <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_unblinded.csv")
+data_ub <- read_csv("https://raw.githubusercontent.com/rolkra/taste/master/beer_test_data_unblinded.csv")
 glimpse(data_ub)
 
 ################################################################################
