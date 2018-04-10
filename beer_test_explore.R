@@ -79,6 +79,9 @@ data %>% summarize(smell_good_goesser = mean(smell_good_goesser),
                    taste_good_goesser = mean(taste_good_goesser),
                    taste_good_ottakringer = mean(taste_good_ottakringer) )
 
+data %>% count(smell_better)
+data %>% count(taste_better)
+
 # explore complete data
 data %>%  explore()
 
