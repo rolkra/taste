@@ -66,20 +66,24 @@ data_ub4 <- data_ub %>%
 glimpse(data_ub4)
 
 ################################################################################
-## explore data
+## explore complete data
 ################################################################################
 
+# join data
 data <- data_ge %>% inner_join(data_ub4, by="id")
 glimpse(data)
 
-## explore complete data
+# which is better?
+data %>% summarize(smell_good_goesser = mean(smell_good_goesser),
+                   smell_good_ottakringer = mean(smell_good_ottakringer),
+                   taste_good_goesser = mean(taste_good_goesser),
+                   taste_good_ottakringer = mean(taste_good_ottakringer) )
+
+# explore complete data
 data %>%  explore()
 
-# explore unblinded data
-data_ub %>% 
-  mutate(is_goesser = ifelse(beer == "Goesser", 1, 0),
-         is_ottakringer = ifelse(beer == "Ottakringer", 1, 0)) %>% 
-  explore()
+# export complete data
+write.csv(data, file = "beer_test_data.csv", quote = FALSE, row.names = FALSE)
 
 ################################################################################
 ## create model
