@@ -106,7 +106,7 @@ mod <- rpart(double_blinded_1 ~ .,
 rpart.plot(mod)
 
 # select attributes
-data_model <- data %>%  select(double_blinded_1, gender, smell_good_diff)
+data_model <- data %>%  select(double_blinded_1, gender, smell_good_diff, smell_better)
 mod <- rpart(double_blinded_1 ~ ., 
              data = data_model,
              method = "class")
