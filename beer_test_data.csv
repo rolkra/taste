@@ -17,7 +17,7 @@ id,double_blinded_1,double_blinded_2,double_blinded_3,gender,age,cooking_at_home
 20,0,0,NA,male,18-29,3,3,1,5,Wieselburger,1,1,1,4,3,3,2,0,1,0,0,3,3,3,6,9,goesser,equal
 21,1,0,NA,male,18-29,4,4,3,4,Wieselburger,1,2,0,4,4,0,0,1,0,1,1,4,5,3,3,6,equal,ottakringer
 22,1,0,NA,male,60+,3,5,3,4,Puntigamer,0,0,0,3,3,0,2,1,1,1,2,4,2,0,7,7,equal,goesser
-23,0,0,0,male,40-49,3,5,4,4,Puntigamer,0,2,1,8,6,1,0,0,0,1,1,8,6,3,3,6,goesser,goesser
+23,0,0,0,male,40-49,3,5,4,4,Puntigamer,0,2,1,4,3,1,0,0,0,1,1,4,3,3,3,6,goesser,goesser
 24,0,0,0,female,40-49,5,1,1,2,Goesser,1,0,0,4,4,0,2,1,1,0,2,5,3,1,6,7,equal,goesser
 25,1,0,0,male,50-59,3,1,1,2,Goesser,2,0,1,3,4,1,0,0,0,0,1,4,3,3,2,5,ottakringer,goesser
 26,1,0,1,female,40-49,5,2,4,1,,0,1,2,2,4,1,0,0,1,0,1,1,2,3,3,6,ottakringer,ottakringer
