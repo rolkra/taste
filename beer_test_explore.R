@@ -40,8 +40,8 @@ data_ub3 %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) +
   scale_fill_manual(values=c("#007442","#FECE27")) +   # Goesser = green, Ottakringer = yellow
   coord_flip() +
   ylim(0,5) +
-
   geom_text(aes(label = round(mean_score,1),  hjust = -0.2, vjust = ifelse(beer == "Goesser", 1.5, -0.5)))
+
 # feature engineering
 data_ub4 <- data_ub %>% 
   group_by(id) %>%
