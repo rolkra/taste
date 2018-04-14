@@ -88,7 +88,7 @@ data %>% count(taste_better)
 data %>%  explore()
 
 # export complete data
-write.csv(data, file = "beer_test_data.csv", quote = FALSE, row.names = FALSE)
+write.csv(data, file = "beer_test_data_all.csv", quote = FALSE, row.names = FALSE)
 
 ################################################################################
 ## create model
