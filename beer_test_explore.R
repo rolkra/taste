@@ -35,11 +35,13 @@ data_ub3 <- data_ub2 %>% group_by(beer, unblinded_test) %>% summarize(mean_score
 glimpse(data_ub3)
 
 # plot 
-data_ub3 %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) + 
-  geom_col(position=position_dodge()) + 
+data_ub3 %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) +
+  geom_col(position=position_dodge()) +
   scale_fill_manual(values=c("darkgreen","orange")) +
-  coord_flip()
+  coord_flip() +
+  ylim(0,5) +
 
+  geom_text(aes(label = round(mean_score,1),  hjust = -0.2, vjust = ifelse(beer == "Goesser", 1.5, -0.5)))
 # feature engineering
 data_ub4 <- data_ub %>% 
   group_by(id) %>%
