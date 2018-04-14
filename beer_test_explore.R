@@ -37,7 +37,7 @@ glimpse(data_ub3)
 # plot 
 data_ub3 %>%  ggplot(aes(x=unblinded_test, y=mean_score, fill=beer)) +
   geom_col(position=position_dodge()) +
-  scale_fill_manual(values=c("#007442","#FECE27")) +
+  scale_fill_manual(values=c("#007442","#FECE27")) +   # Goesser = green, Ottakringer = yellow
   coord_flip() +
   ylim(0,5) +
 
