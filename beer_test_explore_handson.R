@@ -20,3 +20,12 @@ glimpse(data)
 # use explore package to explore data
 library(explore)
 explore(data)
+
+################################################################################
+## add fake result
+################################################################################
+
+# create a random result for double blinded test
+data$double_blinded_fake <- rbinom(25, 1, 1/3)
+explore(data)
+
