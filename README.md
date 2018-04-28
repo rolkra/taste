@@ -13,3 +13,8 @@ R code to prepare and process sensory analysis (taste the difference between foo
 * raw data unblinded: https://raw.githubusercontent.com/rolkra/taste/master/beer_test_data_unblinded.csv
 * preprocessed data: https://raw.githubusercontent.com/rolkra/taste/master/beer_test_data_all.csv
 
+![Example Questionnaire](https://github.com/rolkra/taste/blob/master/beer_test_questionnaire.jpg)
+
+**Data Exploration**: Started at VDSG Cafe V in April 2018. For basic data exploration the R package explore was used (
+https://github.com/rolkra/explore)
+
